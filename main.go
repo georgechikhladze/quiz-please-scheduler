@@ -16,7 +16,7 @@ import (
 func main() {
 	fmt.Println("Quiz Please Scheduler is starting...")
 
-	cfg, err := config.LoadConfig("config.yaml")
+	cfg, err := config.LoadConfig()
 	if err != nil {
 		log.Fatalf("Error config loading: %v", err)
 		return
@@ -30,12 +30,8 @@ func main() {
 		return
 	}
 
-	scheduler := service.NewScheduler(provider, sender, cfg.Schedule)
+	scheduler := service.NewInstance(provider, sender, cfg.Schedule)
 	scheduler.Start()
-
-	log.Printf("Background Service has started. Schedule: %s", cfg.Schedule)
-	log.Printf("Notificatinos will be send to the chat: %s", cfg.Telegram.ChatID)
-
 	waitForShutdown(scheduler)
 
 	log.Println("Quiz Please Scheduler is stopping...")
@@ -46,7 +42,7 @@ func waitForShutdown(scheduler *service.Scheduler) {
 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
 
 	sig := <-sigChan
-	log.Printf("Get stop signal: %v", sig)
+	log.Printf("Received stop signal: %v", sig)
 
 	scheduler.Stop()
 }

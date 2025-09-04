@@ -17,8 +17,9 @@ type Config struct {
 	HTTPPort int            `yaml:"http_port"`
 }
 
-func LoadConfig(path string) (*Config, error) {
-	data, err := os.ReadFile(path)
+func LoadConfig() (*Config, error) {
+	configPath := os.Getenv("CONFIG_PATH")
+	data, err := os.ReadFile(configPath)
 
 	if err != nil {
 		return nil, err

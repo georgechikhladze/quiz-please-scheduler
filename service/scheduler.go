@@ -16,7 +16,7 @@ type Scheduler struct {
 	schedule string
 }
 
-func NewScheduler(
+func NewInstance(
 	provider gameprovider.GameProvider,
 	telegram telegram.TelegramSender,
 	schedule string) *Scheduler {
@@ -32,23 +32,24 @@ func (s *Scheduler) Start() {
 	_, err := s.cron.AddFunc(s.schedule, s.sendGamesMessage)
 	if err != nil {
 		log.Fatalf("Error adding task to cron: %v", err)
+		return
 	}
 
 	s.cron.Start()
-	log.Printf("Scheduler has started. Schedule: %s", s.schedule)
+	log.Printf("Scheduler has started. Cron: %s", s.schedule)
 
 	go s.sendGamesMessage()
 }
 
 func (s *Scheduler) Stop() {
 	s.cron.Stop()
-	log.Println("Scheduler has stopped.")
+	log.Println("Scheduler has stopped")
 }
 
 func (s *Scheduler) sendGamesMessage() {
 	games := s.provider.GetGamesList()
 
-	log.Printf("Get %d opened and %d reserved games", len(games[1]), len(games[2]))
+	log.Printf("Received %d opened and %d reserved games", len(games[1]), len(games[2]))
 
 	if s.telegram != nil {
 		message := GetGamesMessage(games)

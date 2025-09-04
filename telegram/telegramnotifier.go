@@ -1,6 +1,7 @@
 package telegram
 
 import (
+	"log"
 	"strings"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
@@ -17,6 +18,8 @@ func NewInstance(botToken, chatID string) (TelegramSender, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	log.Printf("Notificatinos will be send to the chat: %s", chatID)
 
 	return &TelegramNotifier{
 		bot:    bot,
