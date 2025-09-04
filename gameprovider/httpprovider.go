@@ -75,7 +75,7 @@ func getGames(url string) []Game {
 		}
 
 		number := cleanText(numberNode.Text())
-		place := cleanText(placeNode.Text())
+		place := cleanText(placeNode.Nodes[0].FirstChild.Data)
 		time := cleanText(timeNode.Text())
 
 		// Получаем ссылку
