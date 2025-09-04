@@ -7,10 +7,10 @@ import (
 	"os/signal"
 	"syscall"
 
-	"quiz-please-scheduler/config"
-	"quiz-please-scheduler/gameprovider"
-	"quiz-please-scheduler/service"
-	"quiz-please-scheduler/telegram"
+	"quiz-please-scheduler/internal/config"
+	"quiz-please-scheduler/internal/services"
+	"quiz-please-scheduler/pkg/gameprovider"
+	"quiz-please-scheduler/pkg/telegram"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 
 	cfg, err := config.LoadConfig()
 	if err != nil {
-		log.Fatalf("Error config loading: %v", err)
+		log.Fatalf("Error configuration loading: %v", err)
 		return
 	}
 
@@ -30,14 +30,14 @@ func main() {
 		return
 	}
 
-	scheduler := service.NewInstance(provider, sender, cfg.Schedule)
+	scheduler := services.NewInstance(provider, sender, cfg.Schedule)
 	scheduler.Start()
 	waitForShutdown(scheduler)
 
 	log.Println("Quiz Please Scheduler is stopping...")
 }
 
-func waitForShutdown(scheduler *service.Scheduler) {
+func waitForShutdown(scheduler *services.Scheduler) {
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
 

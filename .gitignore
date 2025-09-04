@@ -30,7 +30,6 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
-main.go
 configs/*
 configs/config.dev.yaml
 configs/config.prod.yaml
