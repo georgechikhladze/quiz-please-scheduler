@@ -3,18 +3,18 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 
 	"quiz-please-scheduler/config"
 	"quiz-please-scheduler/gameprovider"
 	"quiz-please-scheduler/service"
+	"quiz-please-scheduler/telegram"
 )
 
 func main() {
 	fmt.Println("Quiz Please Scheduler is starting...")
-
-	var provider gameprovider.GameProvider = gameprovider.New()
-
-	games := provider.GetGamesList()
 
 	cfg, err := config.LoadConfig("config.yaml")
 	if err != nil {
@@ -22,11 +22,31 @@ func main() {
 		return
 	}
 
-	telegramService, err := service.New(cfg.Telegram.BotToken, cfg.Telegram.ChatID)
+	provider := gameprovider.NewInstance()
+	sender, err := telegram.NewInstance(cfg.Telegram.BotToken, cfg.Telegram.ChatID)
+
 	if err != nil {
-		log.Fatalf("Error initialization Telegram: %v", err)
+		log.Fatalf("Error telegram initialization: %v", err)
 		return
 	}
 
-	telegramService.SendGames(games)
+	scheduler := service.NewScheduler(provider, sender, cfg.Schedule)
+	scheduler.Start()
+
+	log.Printf("Background Service has started. Schedule: %s", cfg.Schedule)
+	log.Printf("Notificatinos will be send to the chat: %s", cfg.Telegram.ChatID)
+
+	waitForShutdown(scheduler)
+
+	log.Println("Quiz Please Scheduler is stopping...")
+}
+
+func waitForShutdown(scheduler *service.Scheduler) {
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+
+	sig := <-sigChan
+	log.Printf("Get stop signal: %v", sig)
+
+	scheduler.Stop()
 }

@@ -14,7 +14,7 @@ type HttpProvider struct {
 
 const DOMAIN string = "https://quizplease.ru"
 
-func New() GameProvider {
+func NewInstance() GameProvider {
 	return &HttpProvider{}
 }
 
