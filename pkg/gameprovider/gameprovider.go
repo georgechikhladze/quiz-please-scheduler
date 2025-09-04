@@ -9,18 +9,18 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type HttpProvider struct {
+type GameProvider struct {
 }
 
-const DOMAIN string = "https://quizplease.ru"
+const Domain string = "https://quizplease.ru"
 
-func NewInstance() GameProvider {
-	return &HttpProvider{}
+func NewInstance() Provider {
+	return &GameProvider{}
 }
 
-func (w *HttpProvider) GetGamesList() map[int][]Game {
-	openGamesUrl := DOMAIN + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=1&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bgame_difficulty%5D%5B%5D=all&QpGameSearch%5Bbars%5D%5B%5D=46&QpGameSearch%5Bbars%5D%5B%5D=85&QpGameSearch%5Bbars%5D%5B%5D=1563&QpGameSearch%5Bbars%5D%5B%5D=1797"
-	reserveGamesUrl := DOMAIN + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=2&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bgame_difficulty%5D%5B%5D=all&QpGameSearch%5Bbars%5D%5B%5D=46&QpGameSearch%5Bbars%5D%5B%5D=85&QpGameSearch%5Bbars%5D%5B%5D=1563&QpGameSearch%5Bbars%5D%5B%5D=1797"
+func (w *GameProvider) GetGamesList() map[int][]Game {
+	openGamesUrl := Domain + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=1&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bgame_difficulty%5D%5B%5D=all&QpGameSearch%5Bbars%5D%5B%5D=46&QpGameSearch%5Bbars%5D%5B%5D=85&QpGameSearch%5Bbars%5D%5B%5D=1563&QpGameSearch%5Bbars%5D%5B%5D=1797"
+	reserveGamesUrl := Domain + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=2&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bgame_difficulty%5D%5B%5D=all&QpGameSearch%5Bbars%5D%5B%5D=46&QpGameSearch%5Bbars%5D%5B%5D=85&QpGameSearch%5Bbars%5D%5B%5D=1563&QpGameSearch%5Bbars%5D%5B%5D=1797"
 
 	openGames := getGames(openGamesUrl)
 	reserveGames := getGames(reserveGamesUrl)
@@ -83,7 +83,7 @@ func getGames(url string) []Game {
 		if !exists {
 			return
 		}
-		fullLink := DOMAIN + link + "#play"
+		fullLink := Domain + link + "#play"
 
 		games = append(games, Game{
 			Date:   date,

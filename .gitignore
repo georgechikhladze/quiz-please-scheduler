@@ -31,5 +31,6 @@ go.work.sum
 # .idea/
 # .vscode/
 main.go
-config/yaml/config.yaml
-config/yaml/config.dev.yaml
+configs/*
+configs/config.dev.yaml
+configs/config.prod.yaml

@@ -1,24 +1,24 @@
-package service
+package services
 
 import (
 	"log"
 
-	"quiz-please-scheduler/gameprovider"
-	"quiz-please-scheduler/telegram"
+	"quiz-please-scheduler/pkg/gameprovider"
+	"quiz-please-scheduler/pkg/telegram"
 
 	"github.com/robfig/cron/v3"
 )
 
 type Scheduler struct {
-	provider gameprovider.GameProvider
-	telegram telegram.TelegramSender
+	provider gameprovider.Provider
+	telegram telegram.Notifier
 	cron     *cron.Cron
 	schedule string
 }
 
 func NewInstance(
-	provider gameprovider.GameProvider,
-	telegram telegram.TelegramSender,
+	provider gameprovider.Provider,
+	telegram telegram.Notifier,
 	schedule string) *Scheduler {
 	return &Scheduler{
 		provider: provider,

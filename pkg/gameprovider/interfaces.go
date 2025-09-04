@@ -1,5 +1,5 @@
 package gameprovider
 
-type GameProvider interface {
+type Provider interface {
 	GetGamesList() map[int][]Game
 }

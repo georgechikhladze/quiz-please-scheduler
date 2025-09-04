@@ -1,10 +1,10 @@
-package service
+package services
 
 import (
 	"fmt"
 	"strings"
 
-	"quiz-please-scheduler/gameprovider"
+	"quiz-please-scheduler/pkg/gameprovider"
 )
 
 func GetGamesMessage(games map[int][]gameprovider.Game) string {

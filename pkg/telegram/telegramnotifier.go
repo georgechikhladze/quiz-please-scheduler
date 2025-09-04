@@ -12,7 +12,7 @@ type TelegramNotifier struct {
 	chatID string
 }
 
-func NewInstance(botToken, chatID string) (TelegramSender, error) {
+func NewInstance(botToken, chatID string) (Notifier, error) {
 	bot, err := tgbotapi.NewBotAPI(botToken)
 
 	if err != nil {

@@ -1,5 +1,5 @@
 package telegram
 
-type TelegramSender interface {
+type Notifier interface {
 	SendMessage(string) error
 }
