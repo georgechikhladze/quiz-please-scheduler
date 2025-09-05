@@ -8,8 +8,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o /app/quiz-please-scheduler .
 # Финальный образ
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
-WORKDIR /root/
+WORKDIR /home/jarashow/quiz-please-scheduler
 COPY --from=builder /app/quiz-please-scheduler .
-# Copy production config to /configs inside the image
-COPY configs/config.prod.yaml /configs/config.prod.yaml
 CMD ["./quiz-please-scheduler"]
