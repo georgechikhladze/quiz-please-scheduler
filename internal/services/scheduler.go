@@ -37,8 +37,7 @@ func (s *Scheduler) Start() {
 
 	s.cron.Start()
 	log.Printf("Scheduler has started. Cron: %s", s.schedule)
-
-	go s.sendGamesMessage()
+	//go s.sendGamesMessage()
 }
 
 func (s *Scheduler) Stop() {

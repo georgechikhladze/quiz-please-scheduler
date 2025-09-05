@@ -1,0 +1,7 @@
+schedule: "* * * * *"
+
+telegram:
+  bot_token: "***:***"
+  chat_id: "***"
+
+http_port: ****

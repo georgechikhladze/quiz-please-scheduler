@@ -32,31 +32,27 @@ func (w *GameProvider) GetGamesList() map[int][]Game {
 }
 
 func getGames(url string) []Game {
-	// Загружаем HTML страницу
 	res, err := http.Get(url)
 	if err != nil {
-		log.Printf("Ошибка загрузки страницы %s: %v", url, err)
+		log.Printf("Error HTML page loading %s: %v", url, err)
 		return nil
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 {
-		log.Printf("Статус код ошибки: %d %s", res.StatusCode, res.Status)
+		log.Printf("Error, statis code: %d %s", res.StatusCode, res.Status)
 		return nil
 	}
 
-	// Парсим HTML
 	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
-		log.Printf("Ошибка парсинга HTML: %v", err)
+		log.Printf("Error HTML parse: %v", err)
 		return nil
 	}
 
 	var games []Game
 
-	// Ищем элементы с классом "schedule-column"
 	doc.Find(".schedule-column").Each(func(_ int, s *goquery.Selection) {
-		// Извлекаем данные из различных элементов
 		dateNode := s.Find(".h3").First()
 		numberNode := s.Find(".h2-game-card").Last()
 		placeNode := s.Find(".schedule-block-info-bar").Last()
@@ -69,7 +65,6 @@ func getGames(url string) []Game {
 
 		date := cleanText(dateNode.Text())
 
-		// Пропускаем будние дни
 		if containsWeekday(date) {
 			return
 		}
@@ -78,7 +73,6 @@ func getGames(url string) []Game {
 		place := cleanText(placeNode.Nodes[0].FirstChild.Data)
 		time := cleanText(timeNode.Text())
 
-		// Получаем ссылку
 		link, exists := s.Find(".schedule-block-head").First().Attr("href")
 		if !exists {
 			return
@@ -97,16 +91,13 @@ func getGames(url string) []Game {
 	return games
 }
 
-// Функция для очистки текста от лишних символов
 func cleanText(text string) string {
-	// Удаляем табы, новые строки и лишние пробелы
 	re := regexp.MustCompile(`\t|\n|\r`)
 	cleaned := re.ReplaceAllString(text, "")
-	cleaned = strings.Join(strings.Fields(cleaned), " ") // Убираем множественные пробелы
+	cleaned = strings.Join(strings.Fields(cleaned), " ")
 	return cleaned
 }
 
-// Функция проверки на будние дни
 func containsWeekday(text string) bool {
 	weekdays := []string{"понедельник", "вторник", "среда", "четверг"}
 	lowerText := strings.ToLower(text)
