@@ -48,7 +48,8 @@ jobs:
             docker run -d \
               --name quiz-please-scheduler \
               --restart unless-stopped \
-              -e CONFIG_PATH=/configs/config.prod.yaml \
+              -e CONFIG_PATH=/config.prod.yaml \
+              -v /home/jarashow/quiz-please-scheduler/config.prod.yaml:/config.prod.yaml \
               -v /app/logs:/app/logs \
               ghcr.io/${{ github.repository }}/quiz-please-scheduler:latest
             
