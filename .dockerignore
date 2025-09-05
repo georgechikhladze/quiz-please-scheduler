@@ -1,0 +1,22 @@
+# Env file
+.env
+
+# Git files
+.git/
+.gitignore
+
+# Docker build files
+Dockerfile
+docker-compose.yml
+
+# Editor/IDE
+.vscode/
+
+# Logs
+*.log
+
+# Config files
+configs/config.dev.yaml
+
+# System files
+.dockerignore
