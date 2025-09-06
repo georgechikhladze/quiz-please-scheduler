@@ -13,16 +13,21 @@ func GetGamesMessage(games map[int][]gameprovider.Game) string {
 	}
 
 	var sb strings.Builder
-	sb.WriteString("*Есть места:\n\n*")
 
-	for _, game := range games[1] {
-		addGame(&sb, game)
+	if len(games[1]) > 0 {
+		sb.WriteString("*Есть места:\n\n*")
+
+		for _, game := range games[1] {
+			addGame(&sb, game)
+		}
 	}
 
-	sb.WriteString("*Резерв:\n\n*")
+	if len(games[2]) > 0 {
+		sb.WriteString("*Резерв:\n\n*")
 
-	for _, game := range games[2] {
-		addGame(&sb, game)
+		for _, game := range games[2] {
+			addGame(&sb, game)
+		}
 	}
 
 	return sb.String()
