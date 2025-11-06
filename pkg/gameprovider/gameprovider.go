@@ -19,8 +19,10 @@ func NewInstance() Provider {
 }
 
 func (w *GameProvider) GetGamesList() map[int][]Game {
-	openGamesUrl := Domain + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=1&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bgame_difficulty%5D%5B%5D=all&QpGameSearch%5Bbars%5D%5B%5D=46&QpGameSearch%5Bbars%5D%5B%5D=85&QpGameSearch%5Bbars%5D%5B%5D=1563&QpGameSearch%5Bbars%5D%5B%5D=1797"
-	reserveGamesUrl := Domain + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=2&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bgame_difficulty%5D%5B%5D=all&QpGameSearch%5Bbars%5D%5B%5D=46&QpGameSearch%5Bbars%5D%5B%5D=85&QpGameSearch%5Bbars%5D%5B%5D=1563&QpGameSearch%5Bbars%5D%5B%5D=1797"
+	//openGamesUrl := Domain + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=1&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bgame_difficulty%5D%5B%5D=all&QpGameSearch%5Bbars%5D%5B%5D=46&QpGameSearch%5Bbars%5D%5B%5D=85&QpGameSearch%5Bbars%5D%5B%5D=1563&QpGameSearch%5Bbars%5D%5B%5D=1797"
+	openGamesUrl := Domain + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=1&QpGameSearch%5Bgame_difficulty%5D%5B%5D=2&QpGameSearch%5Bgame_difficulty%5D%5B%5D=3&QpGameSearch%5Bgame_difficulty%5D%5B%5D=4&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Bbars%5D%5B%5D=all"
+	//reserveGamesUrl := Domain + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=2&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bgame_difficulty%5D%5B%5D=all&QpGameSearch%5Bbars%5D%5B%5D=46&QpGameSearch%5Bbars%5D%5B%5D=85&QpGameSearch%5Bbars%5D%5B%5D=1563&QpGameSearch%5Bbars%5D%5B%5D=1797"
+	reserveGamesUrl := Domain + "/schedule?QpGameSearch%5BcityId%5D=9&QpGameSearch%5Bdates%5D=&QpGameSearch%5Bstatus%5D%5B%5D=2&QpGameSearch%5Bgame_difficulty%5D%5B%5D=2&QpGameSearch%5Bgame_difficulty%5D%5B%5D=3&QpGameSearch%5Bgame_difficulty%5D%5B%5D=4&QpGameSearch%5Btype%5D%5B%5D=1&QpGameSearch%5Bformat%5D%5B%5D=0&QpGameSearch%5Bbars%5D%5B%5D=all"
 
 	openGames := getGames(openGamesUrl)
 	reserveGames := getGames(reserveGamesUrl)
