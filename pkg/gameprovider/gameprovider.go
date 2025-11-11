@@ -3,8 +3,10 @@ package gameprovider
 import (
 	"log"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 )
@@ -32,7 +34,20 @@ func (w *GameProvider) GetGamesList() map[int][]Game {
 }
 
 func getGames(url string) []Game {
-	res, err := http.Get(url)
+	// Prepare HTTP client with timeout and request with headers
+	client := &http.Client{Timeout: 15 * time.Second}
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		log.Printf("Error creating request for %s: %v", url, err)
+		return nil
+	}
+
+	// Common headers to mimic a browser and provide a referer
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36)")
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8")
+	req.Header.Set("Referer", "https://yandex.ru/")
+
+	res, err := client.Do(req)
 	if err != nil {
 		log.Printf("Error HTML page loading %s: %v", url, err)
 		return nil
@@ -48,6 +63,14 @@ func getGames(url string) []Game {
 	if err != nil {
 		log.Printf("Error HTML parse: %v", err)
 		return nil
+	}
+
+	// If DEBUG_HTML env var is set ("1" or "true"), dump full HTML for debugging
+	dbg := strings.ToLower(os.Getenv("DEBUG_HTML"))
+	if dbg == "1" || dbg == "true" {
+		html, err := doc.Html()
+		log.Printf("doc.Html html: %v", html)
+		log.Printf("doc.Html error: %v", err)
 	}
 
 	var games []Game

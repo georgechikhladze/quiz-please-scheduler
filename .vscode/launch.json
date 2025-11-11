@@ -6,9 +6,9 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}",
+            "program": "${workspaceFolder}/cmd",
             "env": {
-                "CONFIG_PATH": "./configs/config.prod.yaml"
+                "CONFIG_PATH": "${workspaceFolder}/configs/config.prod.yaml"
             },
             "args": []
         },
@@ -17,11 +17,12 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${workspaceFolder}",
+            "program": "${workspaceFolder}/cmd",
             "env": {
-                "CONFIG_PATH": "./config/config.dev.yaml"
+                "CONFIG_PATH": "${workspaceFolder}/configs/config.dev.yaml",
+                "DEBUG_HTML": "1"
             },
             "args": []
-        },
+        }
     ]
 }
